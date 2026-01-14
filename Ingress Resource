@@ -4,6 +4,8 @@ metadata:
   name: microservices-ingress
   namespace: ingress-nginx
   annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -18,35 +20,35 @@ spec:
             name: users
             port:
               number: 80
-      - path: /users
+      - path: /users(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: users
             port:
               number: 80
-      - path: /orders
+      - path: /orders(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: orders
             port:
               number: 80
-      - path: /payments
+      - path: /payments(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: payments
             port:
               number: 80
-      - path: /inventory
+      - path: /inventory(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: inventory
             port:
               number: 80
-      - path: /shipping
+      - path: /shipping(/|$)(.*)
         pathType: Prefix
         backend:
           service:
